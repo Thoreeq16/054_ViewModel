@@ -2,6 +2,7 @@
 
 package com.example.pertemuan5
 
+import android.net.http.UrlRequest.Status
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,9 +36,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -79,7 +83,7 @@ fun SelectJK(
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Row(modifier = Modifier.padding(16.dp)) {
         options.forEach { item ->
             Row(
                 modifier = Modifier.selectable(
@@ -102,6 +106,11 @@ fun SelectJK(
         }
     }
 }
+
+@Composable
+fun Status(
+
+)
 
 @Composable
 fun TextHasil(namanya: String, telponnya: String, jenisnya: String, emailnya: String, alamatnya: String) {
@@ -131,6 +140,11 @@ fun TextHasil(namanya: String, telponnya: String, jenisnya: String, emailnya: St
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
 
+        Text(
+            text = "Alamat : " + alamatnya,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+        )
+
     }
 }
 
@@ -140,6 +154,8 @@ fun TampilForm(cobaviewmodel: cobaviewmodel = viewModel()) {
     var textnama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
     var textEml by remember { mutableStateOf("") }
+    var textalmt by remember { mutableStateOf("") }
+    var stat by remember { mutableStateOf("") }
 
     val context = LocalContext.current
     val dataform: dataform
@@ -180,13 +196,41 @@ fun TampilForm(cobaviewmodel: cobaviewmodel = viewModel()) {
         }
     )
 
+    Text(
+        text = "Jenis Kelamin:",
+        fontSize = 15.sp,
+        color = Color.Black,
+        textAlign = TextAlign.Left
+    )
+
     SelectJK(
         options = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = { cobaviewmodel.setJenisK(it) })
+
+    Text(
+        text = "Status:",
+        fontSize = 15.sp,
+        color = Color.Black,
+        textAlign = TextAlign.Left
+    )
+
+
+
+    OutlinedTextField(
+        value = textalmt,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Alamat") },
+        onValueChange = {
+            textalmt = it
+        }
+    )
+
     Button(
         modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaviewmodel.insertData(textnama, textTlp, textEml, dataform.sex)
+            cobaviewmodel.insertData(textnama, textTlp, textEml, textalmt, stat, dataform.sex)
         }
     ) {
         Text(

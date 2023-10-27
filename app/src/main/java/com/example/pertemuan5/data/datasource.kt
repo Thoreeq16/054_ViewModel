@@ -6,6 +6,10 @@ object datasource {
     val jenis = listOf(
         R.string.laki,
         R.string.wanita,
-        R.string.wanita2,
+    )
+
+    val status = listOf(
+        R.string.blmnikah,
+        R.string.nikah,
     )
 }

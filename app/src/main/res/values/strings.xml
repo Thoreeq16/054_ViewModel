@@ -2,7 +2,9 @@
     <string name="app_name">Pertemuan5</string>
     <string name="laki">Laki-laki</string>
     <string name="wanita">Perempuan</string>
-    <string name="wanita2">Perempuan</string>
     <string name="email">eMail</string>
+    <string name="alamat">Alamat</string>
+    <string name="blmnikah">Belum Menikah</string>
+    <string name="nikah">Menikah</string>
     <string name="submit">Submit</string>
 </resources>
