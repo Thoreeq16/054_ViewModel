@@ -104,7 +104,7 @@ fun SelectJK(
 }
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, jenisnya: String) {
+fun TextHasil(namanya: String, telponnya: String, jenisnya: String, emailnya: String, alamatnya: String) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -126,6 +126,11 @@ fun TextHasil(namanya: String, telponnya: String, jenisnya: String) {
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
         )
 
+        Text(
+            text = "Email :  " + emailnya,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+        )
+
     }
 }
 
@@ -134,6 +139,7 @@ fun TampilForm(cobaviewmodel: cobaviewmodel = viewModel()) {
 
     var textnama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
+    var textEml by remember { mutableStateOf("") }
 
     val context = LocalContext.current
     val dataform: dataform
@@ -162,13 +168,25 @@ fun TampilForm(cobaviewmodel: cobaviewmodel = viewModel()) {
             textTlp = it
         }
     )
+
+    OutlinedTextField(
+        value = textEml,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "eMail") },
+        onValueChange = {
+            textEml = it
+        }
+    )
+
     SelectJK(
         options = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = { cobaviewmodel.setJenisK(it) })
     Button(
         modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaviewmodel.insertData(textnama, textTlp, dataform.sex)
+            cobaviewmodel.insertData(textnama, textTlp, textEml, dataform.sex)
         }
     ) {
         Text(
@@ -180,6 +198,8 @@ fun TampilForm(cobaviewmodel: cobaviewmodel = viewModel()) {
     TextHasil(
         namanya = cobaviewmodel.namaUsr,
         telponnya = cobaviewmodel.noTlp,
+        emailnya = cobaviewmodel.eMail,
+        alamatnya = cobaviewmodel.alamat,
         jenisnya = cobaviewmodel.jenisKl
     )
 }
